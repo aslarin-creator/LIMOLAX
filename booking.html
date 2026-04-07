@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIMO LAX &#8212; Book Your Ride</title>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000;
+  --bg2:#0a0a0a;
+  --bg3:#111;
+  --bg4:#1a1a1a;
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+  --text:#f5f5f7;
+  --text2:#a1a1a6;
+  --text3:#6e6e73;
+  --blue:#2997ff;
+  --blue2:rgba(41,151,255,0.15);
+  --gold:#f5a623;
+  --gold2:rgba(245,166,35,0.12);
+  --green:#30d158;
+  --red:#ff453a;
+  --amber:#ffd60a;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);height:52px;display:flex;align-items:center;justify-content:center;}
+.nav-inner{max-width:1080px;width:100%;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-size:17px;font-weight:600;letter-spacing:0.3px;color:var(--text);}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:24px;}
+.nav-link{font-size:13px;color:var(--text2);text-decoration:none;transition:color 0.2s;}
+.nav-link:hover{color:var(--text);}
+.nav-cta{font-size:13px;color:var(--blue);text-decoration:none;font-weight:500;}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(ellipse,rgba(41,151,255,0.06) 0%,transparent 70%);pointer-events:none;}
+.hero-eyebrow{font-size:13px;font-weight:500;letter-spacing:0.5px;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.hero-eyebrow::before,.hero-eyebrow::after{content:"";display:block;width:20px;height:1px;background:var(--gold);opacity:0.5;}
+.hero-h1{font-size:clamp(48px,6vw,80px);font-weight:600;line-height:1.05;letter-spacing:-2px;color:var(--text);margin-bottom:20px;}
+.hero-h1 .grad{background:linear-gradient(90deg,#fff 0%,#a1a1a6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:clamp(17px,2vw,21px);font-weight:300;color:var(--text2);max-width:560px;line-height:1.5;margin-bottom:44px;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary-apple{background:var(--blue);color:#fff;border:none;border-radius:980px;padding:14px 28px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;}
+.btn-primary-apple:hover{background:#1a8ae8;transform:scale(1.02);}
+.btn-secondary-apple{background:transparent;color:var(--blue);border:1px solid rgba(41,151,255,0.35);border-radius:980px;padding:14px 28px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;}
+.btn-secondary-apple:hover{background:var(--blue2);border-color:var(--blue);}
+.hero-scroll{margin-top:60px;font-size:12px;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:8px;}
+.scroll-arrow{width:20px;height:20px;border-right:1.5px solid var(--text3);border-bottom:1.5px solid var(--text3);transform:rotate(45deg);animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0);}50%{transform:rotate(45deg) translateY(4px);}}
+
+/* FEATURES BAR */
+.feat-bar{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:28px 24px;}
+.feat-bar-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+.fb-item{text-align:center;}
+.fb-icon{font-size:22px;margin-bottom:8px;display:block;}
+.fb-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.fb-desc{font-size:12px;color:var(--text3);}
+
+/* BOOKING SECTION */
+.booking-section{max-width:700px;margin:0 auto;padding:80px 24px 120px;}
+
+/* SERVICE CHOOSER */
+.service-chooser{margin-bottom:60px;}
+.chooser-label{font-size:13px;font-weight:500;letter-spacing:0.3px;color:var(--text2);text-transform:uppercase;margin-bottom:20px;}
+.service-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.sc{background:var(--bg3);border:0.5px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+.sc::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.03) 0%,transparent 100%);pointer-events:none;}
+.sc:hover{border-color:var(--border2);background:var(--bg4);transform:translateY(-1px);}
+.sc.sel{border-color:rgba(41,151,255,0.5);background:rgba(41,151,255,0.06);}
+.sc-emoji{font-size:28px;display:block;margin-bottom:14px;}
+.sc-name{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:-0.3px;}
+.sc-desc{font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:14px;}
+.sc-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.sc-tag{font-size:11px;color:var(--text3);background:rgba(255,255,255,0.05);border-radius:20px;padding:3px 9px;}
+.sc .arrow{position:absolute;top:20px;right:20px;font-size:14px;color:var(--text3);transition:all 0.2s;}
+.sc:hover .arrow,.sc.sel .arrow{color:var(--blue);transform:translateX(2px);}
+
+/* DRIVER GRID */
+.driver-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.dc{background:var(--bg3);border:0.5px solid var(--border);border-radius:16px;padding:18px 14px;cursor:pointer;text-align:center;transition:all 0.2s;}
+.dc:hover{border-color:var(--border2);}
+.dc.sel{border-color:rgba(41,151,255,0.5);background:rgba(41,151,255,0.06);}
+.dc-av{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;color:#fff;margin:0 auto 10px;}
+.dc-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.dc-info{font-size:11.5px;color:var(--text3);margin-bottom:3px;}
+.dc-stars{font-size:12px;color:var(--amber);}
+
+/* TYPE BADGE (back nav) */
+.back-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:24px;border-bottom:0.5px solid var(--border);}
+.type-chip{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:980px;padding:6px 14px;font-size:13px;color:var(--text);}
+.back-btn{font-size:13px;color:var(--blue);background:none;border:none;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;}
+
+/* STEP INDICATOR */
+.steps-row{display:flex;align-items:center;margin-bottom:32px;}
+.step-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);flex:1;}
+.step-item.active{color:var(--text);}
+.step-item.done{color:var(--text3);}
+.step-num{width:24px;height:24px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+.step-item.active .step-num{background:var(--blue);border-color:var(--blue);color:#fff;}
+.step-item.done .step-num{background:var(--bg4);border-color:rgba(255,255,255,0.1);color:var(--text3);}
+.step-line{flex:1;height:0.5px;background:rgba(255,255,255,0.08);margin:0 8px;}
+.step-line.done{background:rgba(41,151,255,0.3);}
+.prog-bar{height:1.5px;background:rgba(255,255,255,0.06);border-radius:1px;margin-bottom:36px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--blue);border-radius:1px;transition:width 0.4s cubic-bezier(0.4,0,0.2,1);}
+
+/* FORM ELEMENTS */
+.f-section{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin:28px 0 14px;display:flex;align-items:center;gap:12px;}
+.f-section::after{content:"";flex:1;height:0.5px;background:var(--border);}
+.fg{margin-bottom:14px;}
+.fg label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;letter-spacing:0.2px;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg3);border:0.5px solid var(--border);border-radius:12px;padding:13px 16px;color:var(--text);font-family:inherit;font-size:15px;outline:none;transition:all 0.2s;-webkit-appearance:none;appearance:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(41,151,255,0.6);background:var(--bg4);box-shadow:0 0 0 3px rgba(41,151,255,0.1);}
+.fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e6e73' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer;}
+.fg select option{background:var(--bg3);}
+.fg textarea{resize:vertical;min-height:90px;line-height:1.6;}
+.fg input::placeholder{color:var(--text3);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+/* ROUTE VISUAL */
+.route-box{background:var(--bg3);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:8px;}
+.rf{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.rf+.rf{border-top:0.5px solid var(--border);}
+.rdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.rline{width:1.5px;height:24px;background:rgba(255,255,255,0.1);margin:2px auto 0;}
+.rlbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);min-width:22px;font-weight:600;}
+.rf input{flex:1;background:transparent;border:none;color:var(--text);font-family:inherit;font-size:15px;outline:none;}
+.rf input::placeholder{color:var(--text3);}
+.add-btn{background:none;border:none;color:var(--blue);font-family:inherit;font-size:13px;cursor:pointer;padding:6px 0;display:flex;align-items:center;gap:6px;margin-bottom:6px;transition:opacity 0.2s;}
+.add-btn:hover{opacity:0.8;}
+
+/* VEHICLE PICKER */
+.veh-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.veh{background:var(--bg3);border:0.5px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all 0.2s;position:relative;}
+.veh:hover{border-color:var(--border2);}
+.veh.sel{border-color:rgba(41,151,255,0.5);background:rgba(41,151,255,0.06);}
+.veh.sel::after{content:"";position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.veh-icon{font-size:22px;margin-bottom:8px;display:block;}
+.veh-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.veh-cap{font-size:12px;color:var(--text3);}
+
+/* EXTRAS */
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.extra{display:flex;align-items:center;gap:10px;padding:12px 14px;border:0.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;font-size:13px;color:var(--text2);}
+.extra:hover{border-color:var(--border2);}
+.extra.chk{border-color:rgba(41,151,255,0.4);background:rgba(41,151,255,0.06);color:var(--text);}
+.xck{width:18px;height:18px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:all 0.2s;}
+.extra.chk .xck{background:var(--blue);border-color:var(--blue);color:#fff;}
+
+/* PAY OPTIONS */
+.pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.pay-opt{border:0.5px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;}
+.pay-opt:hover{border-color:var(--border2);}
+.pay-opt.sel{border-color:rgba(41,151,255,0.5);background:rgba(41,151,255,0.06);}
+.pay-icon{font-size:20px;margin-bottom:5px;}
+.pay-lbl{font-size:12px;color:var(--text2);}
+.pay-opt.sel .pay-lbl{color:var(--blue);}
+
+/* SUMMARY */
+.sum-card{background:var(--bg3);border:0.5px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;}
+.sr{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--border);font-size:14px;}
+.sr:last-child{border-bottom:none;}
+.sl{color:var(--text2);}
+.sv{color:var(--text);font-weight:500;text-align:right;max-width:58%;}
+.sr.tot .sl{color:var(--text);font-weight:500;}
+.sr.tot .sv{color:var(--blue);font-size:20px;font-weight:600;}
+
+/* PAYMENT */
+.card-form{background:var(--bg3);border:0.5px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px;}
+.card-brands{display:flex;gap:6px;margin-left:auto;}
+.cbrand{background:var(--bg4);border:0.5px solid var(--border);border-radius:5px;padding:3px 8px;font-size:11px;color:var(--text3);}
+.sec-badges{display:flex;align-items:center;justify-content:center;gap:20px;padding:14px 0 2px;border-top:0.5px solid var(--border);margin-top:2px;}
+.sb{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text3);}
+
+/* T&C */
+.tc-box{background:var(--bg3);border:0.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:4px;}
+.tc-err{display:none;color:var(--red);font-size:12px;padding:6px 4px 10px;}
+
+/* BUTTONS */
+.btn-next-apple{width:100%;padding:16px;background:var(--blue);border:none;border-radius:980px;color:#fff;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:28px;letter-spacing:-0.2px;}
+.btn-next-apple:hover{background:#1a8ae8;transform:scale(1.01);}
+.btn-next-apple:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.btn-back-apple{background:none;border:none;color:var(--blue);font-family:inherit;font-size:14px;cursor:pointer;padding:12px 0;display:block;width:100%;text-align:center;margin-top:10px;}
+.trust-row{display:flex;gap:20px;justify-content:center;margin-top:24px;padding-top:20px;border-top:0.5px solid var(--border);}
+.tr{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);}
+.stop-row{display:none;}
+.stop-row.vis{display:flex;}
+.sp{display:none;}
+.sp.active{display:block;animation:fi 0.3s cubic-bezier(0.4,0,0.2,1);}
+@keyframes fi{from{opacity:0;transform:translateX(10px);}to{opacity:1;transform:translateX(0);}}
+.info-note{background:rgba(245,166,35,0.08);border:0.5px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:13px;color:rgba(245,166,35,0.9);line-height:1.6;}
+.ok-note{background:rgba(48,209,88,0.08);border:0.5px solid rgba(48,209,88,0.2);border-radius:12px;padding:12px 14px;font-size:13px;color:rgba(48,209,88,0.9);margin-bottom:14px;}
+
+/* CONFIRM */
+.confirm-wrap{text-align:center;padding:20px 0;}
+.ci{width:80px;height:80px;border-radius:50%;background:rgba(48,209,88,0.1);border:0.5px solid rgba(48,209,88,0.25);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 24px;animation:pop 0.5s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes pop{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.ct{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-1px;color:var(--text);margin-bottom:10px;}
+.cs{font-size:17px;font-weight:300;color:var(--text2);margin-bottom:32px;line-height:1.5;}
+.cref{display:inline-block;background:var(--bg3);border:0.5px solid var(--border2);border-radius:12px;padding:12px 28px;font-size:15px;font-weight:500;color:var(--text);letter-spacing:0.5px;margin-bottom:32px;}
+.cdetail{background:var(--bg3);border:0.5px solid var(--border);border-radius:16px;padding:18px 20px;text-align:left;margin-bottom:24px;}
+.cd{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-bottom:0.5px solid var(--border);}
+.cd:last-child{border-bottom:none;}
+.cd span:first-child{color:var(--text2);}
+.cd span:last-child{color:var(--text);font-weight:500;}
+.cnote{font-size:13px;color:var(--text3);line-height:1.7;}
+
+/* T&C MODAL */
+.tc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(12px);z-index:999;align-items:flex-end;justify-content:center;padding:0;}
+.tc-overlay.open{display:flex;}
+.tc-sheet{background:var(--bg3);border:0.5px solid var(--border);border-radius:24px 24px 0 0;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;padding:28px 28px 40px;animation:slideUp 0.35s cubic-bezier(0.4,0,0.2,1);}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.tc-handle{width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 24px;}
+.tc-h{font-size:22px;font-weight:600;letter-spacing:-0.5px;color:var(--text);margin-bottom:4px;}
+.tc-date{font-size:13px;color:var(--text3);margin-bottom:24px;}
+.tc-section{margin-bottom:20px;}
+.tc-num{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.tc-num-pill{width:22px;height:22px;border-radius:50%;background:var(--bg4);border:0.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+.tc-p{font-size:13.5px;color:var(--text2);line-height:1.7;}
+.tc-highlight{background:rgba(245,166,35,0.07);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:24px;}
+.tc-highlight-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}
+.tc-disclaimer{background:rgba(255,69,58,0.06);border:0.5px solid rgba(255,69,58,0.15);border-radius:10px;padding:14px;font-size:12.5px;color:rgba(255,69,58,0.8);line-height:1.6;margin-top:20px;}
+.tc-footer{display:flex;gap:10px;margin-top:24px;padding-top:20px;border-top:0.5px solid var(--border);}
+.btn-tc-decline{flex:1;padding:14px;background:var(--bg4);border:0.5px solid var(--border);border-radius:980px;color:var(--text2);font-family:inherit;font-size:15px;cursor:pointer;transition:all 0.2s;}
+.btn-tc-accept{flex:2;padding:14px;background:var(--blue);border:none;border-radius:980px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.btn-tc-accept:hover{background:#1a8ae8;}
+
+/* FEATURES SECTION */
+.feat-section{background:var(--bg2);padding:100px 24px;border-top:0.5px solid var(--border);}
+.feat-section-inner{max-width:900px;margin:0 auto;}
+.feat-eyebrow{font-size:13px;font-weight:500;color:var(--blue);text-align:center;margin-bottom:14px;}
+.feat-h2{font-size:clamp(36px,4vw,52px);font-weight:600;letter-spacing:-1.5px;color:var(--text);text-align:center;margin-bottom:60px;line-height:1.1;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.feat{background:var(--bg3);border:0.5px solid var(--border);border-radius:20px;padding:28px;}
+.feat-icon{font-size:28px;display:block;margin-bottom:16px;}
+.feat-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:8px;letter-spacing:-0.3px;}
+.feat-desc{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:0.5px solid var(--border);padding:32px 24px;font-size:13px;color:var(--text3);}
+.foot-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.foot-links{display:flex;gap:20px;}
+.foot-links a{color:var(--text3);text-decoration:none;transition:color 0.2s;}
+.foot-links a:hover{color:var(--text);}
+
+/* PRIVATE NOTICE */
+.private-notice{background:rgba(255,255,255,0.03);border:0.5px solid var(--border);border-radius:10px;padding:10px 16px;margin-bottom:20px;font-size:12.5px;color:var(--text3);text-align:center;letter-spacing:0.2px;}
+
+@media(max-width:768px){
+  .feat-bar-inner{grid-template-columns:1fr 1fr;}
+  .service-cards,.driver-grid,.frow,.veh-grid,.extras,.pay-opts{grid-template-columns:1fr;}
+  .feat-grid{grid-template-columns:1fr;}
+  .hero-h1{letter-spacing:-1.5px;}
+  .nav-links{display:none;}
+  .tc-sheet{padding:24px 20px 36px;}
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><span>LLX</span> &#x00B7; LIMO LAX</div>
+    <div class="nav-links">
+      <a class="nav-link" href="#book">Book</a>
+      <a class="nav-link" href="#features">Services</a>
+      <a class="nav-link" href="tel:+13100000000">(310) 000-0000</a>
+    </div>
+    <a class="nav-cta" href="index.html">Staff Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">Premium Ground Transportation &#x00B7; Los Angeles</div>
+  <h1 class="hero-h1"><span class="grad">Arrive differently.</span></h1>
+  <p class="hero-sub">Professional chauffeurs, luxury vehicles, and white-glove service from LAX to anywhere in Southern California.</p>
+  <div class="hero-btns">
+    <a class="btn-primary-apple" href="#book">Book a Ride</a>
+    <a class="btn-secondary-apple" href="tel:+13100000000">Call Dispatch</a>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- FEATURES BAR -->
+<div class="feat-bar">
+  <div class="feat-bar-inner">
+    <div class="fb-item"><span class="fb-icon">&#9992;&#65039;</span><div class="fb-title">Flight tracking</div><div class="fb-desc">We monitor every arrival</div></div>
+    <div class="fb-item"><span class="fb-icon">&#128274;</span><div class="fb-title">Secure payment</div><div class="fb-desc">Stripe encrypted checkout</div></div>
+    <div class="fb-item"><span class="fb-icon">&#128241;</span><div class="fb-title">Live updates</div><div class="fb-desc">SMS at every step</div></div>
+    <div class="fb-item"><span class="fb-icon">&#9733;</span><div class="fb-title">Flat rates</div><div class="fb-desc">No surge pricing, ever</div></div>
+  </div>
+</div>
+
+<!-- BOOKING SECTION -->
+<section class="booking-section" id="book">
+
+  <div class="private-notice">Private pre-scheduled transportation only &#x00B7; Not a rideshare service</div>
+
+  <!-- LANDING -->
+  <div id="s-landing">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-1px;color:var(--text);margin-bottom:10px;">Reserve your ride</div>
+      <div style="font-size:16px;font-weight:300;color:var(--text2);">Choose your service to get started</div>
+    </div>
+    <div class="chooser-label">Select service</div>
+    <div class="service-cards">
+      <div class="sc" onclick="selType('ride')">
+        <span class="sc-emoji">&#128664;</span>
+        <div class="sc-name">Book a Ride</div>
+        <div class="sc-desc">From A to B. We assign the best available driver for your route.</div>
+        <div class="sc-tags"><span class="sc-tag">Airport</span><span class="sc-tag">Point to point</span><span class="sc-tag">Hourly</span></div>
+        <div class="arrow">&#8599;</div>
+      </div>
+      <div class="sc" onclick="selType('driver')">
+        <span class="sc-emoji">&#129489;&#8205;&#9992;&#65039;</span>
+        <div class="sc-name">Book Your Driver</div>
+        <div class="sc-desc">Have a preferred chauffeur? Request them directly by name.</div>
+        <div class="sc-tags"><span class="sc-tag">Returning clients</span><span class="sc-tag">VIP</span></div>
+        <div class="arrow">&#8599;</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;font-size:13px;color:var(--text3);">&#128274; Secure &#x00B7; No charge until confirmed &#x00B7; Free cancellation</div>
+  </div>
+
+  <!-- DRIVER SELECT -->
+  <div id="s-driver" style="display:none;">
+    <div class="back-nav">
+      <button class="back-btn" onclick="goLand()">&#8592; Back</button>
+      <div class="type-chip"><span>&#129489;</span> Book Your Driver</div>
+    </div>
+    <div style="font-size:24px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px;color:var(--text);">Select your chauffeur</div>
+    <div style="font-size:14px;color:var(--text2);margin-bottom:24px;">Tap to choose your preferred driver</div>
+    <div class="driver-grid">
+      <div class="dc" onclick="pickDrv(this,'James Rivera','Cadillac Escalade')"><div class="dc-av" style="background:#8B6E2E;">JR</div><div class="dc-name">James Rivera</div><div class="dc-info">Cadillac Escalade &#x00B7; White</div><div class="dc-stars">&#9733; 4.9 &#x00B7; 142 trips</div></div>
+      <div class="dc" onclick="pickDrv(this,'Marcus Johnson','Mercedes S-Class')"><div class="dc-av" style="background:#1a4a8a;">MJ</div><div class="dc-name">Marcus Johnson</div><div class="dc-info">Mercedes S-Class &#x00B7; Black</div><div class="dc-stars">&#9733; 4.8 &#x00B7; 98 trips</div></div>
+      <div class="dc" onclick="pickDrv(this,'Sofia Keller','Lincoln Navigator')"><div class="dc-av" style="background:#5b2d8a;">SK</div><div class="dc-name">Sofia Keller</div><div class="dc-info">Lincoln Navigator &#x00B7; Black</div><div class="dc-stars">&#9733; 5.0 &#x00B7; 76 trips</div></div>
+      <div class="dc" onclick="pickDrv(this,'Carlos Mendez','GMC Yukon XL')"><div class="dc-av" style="background:#1a6644;">CM</div><div class="dc-name">Carlos Mendez</div><div class="dc-info">GMC Yukon XL &#x00B7; Silver</div><div class="dc-stars">&#9733; 4.9 &#x00B7; 115 trips</div></div>
+    </div>
+    <div id="drv-note" style="display:none;" class="ok-note">Driver <strong id="drv-name">James Rivera</strong> selected. We will assign them when available.</div>
+    <button class="btn-next-apple" id="btn-drv-go" style="display:none;" onclick="startForm('driver')">Continue to Booking &#8594;</button>
+  </div>
+
+  <!-- FORM -->
+  <div id="s-form" style="display:none;">
+    <div class="back-nav">
+      <button class="back-btn" onclick="goLand()">&#8592; Back to services</button>
+      <div class="type-chip" id="f-chip"><span id="f-icon">&#128664;</span> <span id="f-lbl">Book a Ride</span></div>
+    </div>
+    <div id="f-drv-rem" style="display:none;" class="ok-note">&#128100; Preferred driver: <strong id="f-drv-name">&#8212;</strong></div>
+    <div style="font-size:26px;font-weight:600;letter-spacing:-0.5px;margin-bottom:4px;color:var(--text);" id="f-title">Request a Reservation</div>
+    <div style="font-size:14px;color:var(--text2);margin-bottom:28px;">Complete all steps &#x00B7; Secure payment &#x00B7; Free cancellation</div>
+
+    <!-- STEPS -->
+    <div class="steps-row">
+      <div class="step-item active" id="si-1"><div class="step-num">1</div><span>Trip</span></div>
+      <div class="step-line" id="sl-1"></div>
+      <div class="step-item" id="si-2"><div class="step-num">2</div><span>Vehicle</span></div>
+      <div class="step-line" id="sl-2"></div>
+      <div class="step-item" id="si-3"><div class="step-num">3</div><span>Details</span></div>
+      <div class="step-line" id="sl-3"></div>
+      <div class="step-item" id="si-4"><div class="step-num">4</div><span>Review</span></div>
+      <div class="step-line" id="sl-4"></div>
+      <div class="step-item" id="si-5"><div class="step-num">5</div><span>Pay</span></div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="pfill" style="width:20%;"></div></div>
+
+    <!-- STEP 1 -->
+    <div class="sp active" id="step-1">
+      <div class="f-section">Route</div>
+      <div class="route-box">
+        <div class="rf"><div><div class="rdot" style="background:#30d158;"></div><div class="rline"></div></div><span class="rlbl">PU</span><input type="text" id="pickup" placeholder="Pickup address or airport terminal"></div>
+        <div class="rf stop-row" id="stop-row"><div><div class="rdot" style="background:#ffd60a;"></div><div class="rline"></div></div><span class="rlbl">ST</span><input type="text" placeholder="Intermediate stop"></div>
+        <div class="rf"><div><div class="rdot" style="background:#ff453a;"></div></div><span class="rlbl">DO</span><input type="text" id="dropoff" placeholder="Drop-off address or hotel"></div>
+      </div>
+      <button class="add-btn" onclick="togStop(this)"><span>+</span> Add intermediate stop</button>
+      <div class="f-section">Service &amp; Date</div>
+      <div class="fg"><label>Service Type</label>
+        <select id="nb-stype" onchange="calcP()">
+          <option value="">Select service type...</option>
+          <option value="airport">Airport Transfer</option>
+          <option value="p2p">Point to Point</option>
+          <option value="hourly">Hourly / As Directed</option>
+          <option value="roundtrip">Round Trip</option>
+          <option value="corporate">Corporate Ride</option>
+          <option value="event">Special Event</option>
+        </select>
+      </div>
+      <div class="frow" style="margin-bottom:14px;">
+        <div class="fg" style="margin:0;"><label>Pickup Date</label><input type="date" id="trip-date"></div>
+        <div class="fg" style="margin:0;"><label>Pickup Time</label><input type="time" id="trip-time"></div>
+      </div>
+      <button class="add-btn" onclick="togFlight(this)"><span>&#9992;</span> Add flight info (airport pickups)</button>
+      <div id="flight-f" style="display:none;margin-bottom:12px;">
+        <div class="frow"><div class="fg" style="margin:0;"><label>Airline</label><input type="text" placeholder="Delta, American..."></div><div class="fg" style="margin:0;"><label>Flight #</label><input type="text" placeholder="AA 221"></div></div>
+      </div>
+      <div class="frow" style="margin-bottom:0;">
+        <div class="fg" style="margin:0;"><label>Passengers</label><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select></div>
+        <div class="fg" style="margin:0;"><label>Luggage / Bags</label><select><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+      </div>
+      <button class="btn-next-apple" onclick="goS(2)">Continue &#8594;</button>
+      <div class="trust-row"><div class="tr"><span>&#128274;</span> Secure</div><div class="tr"><span>&#10003;</span> No upfront charge</div><div class="tr"><span>&#128241;</span> SMS updates</div></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="sp" id="step-2">
+      <div class="f-section">Vehicle</div>
+      <div class="veh-grid">
+        <div class="veh sel" onclick="selV(this,'Sedan')"><span class="veh-icon">&#128663;</span><div class="veh-name">Sedan</div><div class="veh-cap">Up to 3 passengers</div></div>
+        <div class="veh" onclick="selV(this,'SUV / Escalade')"><span class="veh-icon">&#128665;</span><div class="veh-name">SUV / Escalade</div><div class="veh-cap">Up to 6 passengers</div></div>
+        <div class="veh" onclick="selV(this,'Sprinter Van')"><span class="veh-icon">&#128656;</span><div class="veh-name">Sprinter Van</div><div class="veh-cap">Up to 14 passengers</div></div>
+        <div class="veh" onclick="selV(this,'Stretch Limo')"><span class="veh-icon">&#127884;</span><div class="veh-name">Stretch Limo</div><div class="veh-cap">Up to 8 passengers</div></div>
+      </div>
+      <div class="f-section">Add-ons</div>
+      <div class="extras">
+        <div class="extra" onclick="this.classList.toggle('chk')"><div class="xck">&#10003;</div><span>&#127870; Champagne / Water</span></div>
+        <div class="extra" onclick="this.classList.toggle('chk')"><div class="xck">&#10003;</div><span>&#128291; Name Sign</span></div>
+        <div class="extra" onclick="this.classList.toggle('chk')"><div class="xck">&#10003;</div><span>&#129523; Luggage Assist</span></div>
+        <div class="extra" onclick="this.classList.toggle('chk')"><div class="xck">&#10003;</div><span>&#128116; Child Seat</span></div>
+      </div>
+      <button class="btn-next-apple" onclick="goS(3)">Continue &#8594;</button>
+      <button class="btn-back-apple" onclick="goS(1)">&#8592; Back</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="sp" id="step-3">
+      <div class="f-section">Your Information</div>
+      <div class="frow" style="margin-bottom:14px;">
+        <div class="fg" style="margin:0;"><label>First Name</label><input type="text" id="fname" placeholder="John"></div>
+        <div class="fg" style="margin:0;"><label>Last Name</label><input type="text" id="lname" placeholder="Smith"></div>
+      </div>
+      <div class="fg"><label>Email</label><input type="email" id="email" placeholder="john@email.com"></div>
+      <div class="fg"><label>Phone</label><input type="tel" id="phone" placeholder="+1 (310) 000-0000"></div>
+      <div class="f-section">Payment Method</div>
+      <div class="pay-opts">
+        <div class="pay-opt sel" onclick="selPay(this)"><div class="pay-icon">&#128179;</div><div class="pay-lbl">Credit Card</div></div>
+        <div class="pay-opt" onclick="selPay(this)"><div class="pay-icon">&#128181;</div><div class="pay-lbl">Cash</div></div>
+        <div class="pay-opt" onclick="selPay(this)"><div class="pay-icon">&#128241;</div><div class="pay-lbl">Zelle</div></div>
+      </div>
+      <div class="fg"><label>Special Requests</label><textarea placeholder="Special instructions, preferences, accessibility needs..."></textarea></div>
+      <button class="btn-next-apple" onclick="goS(4)">Review Booking &#8594;</button>
+      <button class="btn-back-apple" onclick="goS(2)">&#8592; Back</button>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="sp" id="step-4">
+      <div class="f-section">Booking Summary</div>
+      <div class="sum-card">
+        <div class="sr"><span class="sl">Route</span><span class="sv" id="sum-route">&#8212;</span></div>
+        <div class="sr"><span class="sl">Date &amp; Time</span><span class="sv" id="sum-dt">&#8212;</span></div>
+        <div class="sr"><span class="sl">Passengers</span><span class="sv" id="sum-pax">&#8212;</span></div>
+        <div class="sr"><span class="sl">Vehicle</span><span class="sv" id="sum-veh">&#8212;</span></div>
+        <div class="sr" id="sum-drv-row" style="display:none;"><span class="sl">Preferred Driver</span><span class="sv" id="sum-drv">&#8212;</span></div>
+        <div class="sr"><span class="sl">Name</span><span class="sv" id="sum-nm">&#8212;</span></div>
+        <div class="sr"><span class="sl">Contact</span><span class="sv" id="sum-ct">&#8212;</span></div>
+        <div class="sr tot"><span class="sl">Estimated Total</span><span class="sv">Quote on confirmation</span></div>
+      </div>
+      <div class="info-note">&#128179; Your card is saved securely. Payment only charged after dispatch confirms your trip.</div>
+      <button class="btn-next-apple" onclick="goS(5)"><span>&#128179;</span> Continue to Payment</button>
+      <button class="btn-back-apple" onclick="goS(3)">&#8592; Back</button>
+    </div>
+
+    <!-- STEP 5 PAYMENT -->
+    <div class="sp" id="step-5">
+      <div class="f-section">Payment</div>
+      <div style="background:var(--bg3);border:0.5px solid var(--border);border-radius:16px;padding:16px 20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-size:13px;color:var(--text2);margin-bottom:3px;">Trip total</div><div style="font-size:28px;font-weight:600;color:var(--blue);letter-spacing:-0.5px;" id="pay-total">$320.00</div></div>
+        <div style="text-align:right;font-size:13px;color:var(--text2);"><div id="pay-veh">&#8212;</div><div id="pay-route" style="color:var(--text3);font-size:12px;margin-top:2px;">&#8212;</div></div>
+      </div>
+      <div class="card-form">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;"><span style="font-size:14px;font-weight:500;color:var(--text);">Card Details</span><div class="card-brands" style="margin-left:auto;"><div class="cbrand">VISA</div><div class="cbrand">MC</div><div class="cbrand">AMEX</div></div></div>
+        <div class="fg" style="margin-bottom:14px;"><label>Cardholder Name</label><input type="text" id="card-name" placeholder="Name as on card"></div>
+        <div class="fg" style="margin-bottom:14px;position:relative;"><label>Card Number</label><input type="text" id="card-num" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)" style="letter-spacing:1px;padding-right:48px;"><span style="position:absolute;right:14px;bottom:13px;font-size:18px;pointer-events:none;">&#128179;</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="fg" style="margin:0;"><label>Expiry</label><input type="text" id="card-exp" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)"></div>
+          <div class="fg" style="margin:0;"><label>CVV</label><input type="text" id="card-cvv" placeholder="..." maxlength="4" style="letter-spacing:3px;"></div>
+        </div>
+        <div class="sec-badges"><div class="sb"><span>&#128274;</span> SSL Encrypted</div><div class="sb"><span>&#128737;</span> Stripe Secured</div><div class="sb"><span>&#10003;</span> PCI Compliant</div></div>
+      </div>
+
+      <!-- T&C CHECKBOX -->
+      <div class="tc-box">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+          <div style="position:relative;flex-shrink:0;margin-top:1px;">
+            <input type="checkbox" id="tc-check" onchange="togTC(this)" style="opacity:0;position:absolute;width:20px;height:20px;cursor:pointer;margin:0;">
+            <div id="tc-vis" style="width:20px;height:20px;border-radius:6px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:12px;color:#fff;font-weight:700;"></div>
+          </div>
+          <div style="font-size:13.5px;color:var(--text2);line-height:1.6;">
+            I agree to the <span onclick="openTC(event)" style="color:var(--blue);cursor:pointer;">Terms &amp; Conditions</span> and understand LIMO LAX is a booking platform only and is not liable for incidents during transportation.
+          </div>
+        </label>
+      </div>
+      <div class="tc-err" id="tc-err">Please accept the Terms &amp; Conditions to continue.</div>
+
+      <button class="btn-next-apple" onclick="procPay()" id="pay-btn"><span>&#128274;</span><span id="pay-btn-txt">Confirm &amp; Pay $320.00</span></button>
+      <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:12px;line-height:1.6;">Charged only after dispatch confirms &#x00B7; Free cancellation 2hrs before pickup</p>
+      <button class="btn-back-apple" onclick="goS(4)">&#8592; Back to Review</button>
+    </div>
+
+    <!-- STEP 6 CONFIRM -->
+    <div class="sp" id="step-6">
+      <div class="confirm-wrap">
+        <div class="ci">&#10003;</div>
+        <h2 class="ct">You are confirmed.</h2>
+        <p class="cs">Our dispatch team will review and send your full confirmation within 15 minutes.</p>
+        <div class="cref">Reservation #LLX-<span id="ref-num">0000</span></div>
+        <div class="cdetail">
+          <div class="cd"><span>Route</span><span id="conf-route">&#8212;</span></div>
+          <div class="cd"><span>Date &amp; Time</span><span id="conf-dt">&#8212;</span></div>
+          <div class="cd"><span>Vehicle</span><span id="conf-veh">&#8212;</span></div>
+          <div class="cd" id="conf-drv-row" style="display:none;"><span>Preferred Driver</span><span id="conf-drv">&#8212;</span></div>
+          <div class="cd"><span>Confirmation to</span><span id="conf-email">&#8212;</span></div>
+        </div>
+        <p class="cnote">Questions? Call <strong style="color:var(--text2);">(310) 000-0000</strong> or email <strong style="color:var(--text2);">dispatch@booklimolax.com</strong></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="feat-section" id="features">
+  <div class="feat-section-inner">
+    <div class="feat-eyebrow">Why LIMO LAX</div>
+    <h2 class="feat-h2">The standard for<br>luxury transport.</h2>
+    <div class="feat-grid">
+      <div class="feat"><span class="feat-icon">&#9992;&#65039;</span><div class="feat-title">Flight Monitoring</div><div class="feat-desc">We track your flight in real time. If it delays, your driver adjusts automatically.</div></div>
+      <div class="feat"><span class="feat-icon">&#129489;&#8205;&#9992;&#65039;</span><div class="feat-title">Elite Chauffeurs</div><div class="feat-desc">Vetted, licensed, and trained to the highest standards of luxury hospitality.</div></div>
+      <div class="feat"><span class="feat-icon">&#128241;</span><div class="feat-title">Real-Time Updates</div><div class="feat-desc">SMS and email at every step. You always know where your driver is.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div style="color:var(--text3);">&#169; 2026 LIMO LAX &#x00B7; Los Angeles, CA</div>
+    <div class="foot-links">
+      <a href="tel:+13100000000">(310) 000-0000</a>
+      <a href="mailto:dispatch@booklimolax.com">dispatch@booklimolax.com</a>
+      <a href="index.html">Staff Login</a>
+    </div>
+  </div>
+</footer>
+
+<!-- T&C MODAL -->
+<div class="tc-overlay" id="tc-overlay" onclick="closeTC(event)">
+  <div class="tc-sheet" onclick="event.stopPropagation()">
+    <div class="tc-handle"></div>
+    <div class="tc-h">Terms &amp; Conditions</div>
+    <div class="tc-date">LIMO LAX &#8212; LLX &#x00B7; Last updated March 2026</div>
+    <div class="tc-highlight">
+      <div class="tc-highlight-title">Important Notice</div>
+      LIMO LAX operates exclusively as a transportation booking platform. By reserving, you acknowledge LIMO LAX is not a transportation carrier and does not assume liability for events during your trip.
+    </div>
+    <div class="tc-section"><div class="tc-num"><div class="tc-num-pill">1</div> Booking Platform Only</div><div class="tc-p">LIMO LAX acts solely as an intermediary connecting clients with independent transportation providers. LIMO LAX does not own, operate, or control the vehicles. LIMO LAX is not a party to the transportation contract between the client and the driver.</div></div>
+    <div class="tc-section"><div class="tc-num"><div class="tc-num-pill">2</div> Limitation of Liability</div><div class="tc-p">LIMO LAX, its owners, employees, dispatchers, and affiliates shall not be held liable for any injury, death, property damage, loss, accident, delay, or any other incident occurring during or in connection with transportation services arranged through this platform. All transportation is provided by independent contractors who maintain their own insurance coverage as required by California law.</div></div>
+    <div class="tc-section"><div class="tc-num"><div class="tc-num-pill">3</div> Driver Insurance</div><div class="tc-p">Each driver is required to maintain valid commercial vehicle insurance meeting California TCP requirements. In the event of an accident, claims must be directed to the driver's insurance carrier.</div></div>
+    <div class="tc-section"><div class="tc-num"><div class="tc-num-pill">4</div> Cancellation Policy</div><div class="tc-p">Cancellations more than 2 hours before pickup are eligible for a full refund. Within 2 hours: up to 50% fee. No-shows are non-refundable. Refunds processed within 5-10 business days.</div></div>
+    <div class="tc-section"><div class="tc-num"><div class="tc-num-pill">5</div> Payment</div><div class="tc-p">By providing your card, you authorize LIMO LAX to charge the agreed total upon dispatch confirmation. Card details are processed securely through Stripe and never stored on our servers.</div></div>
+    <div class="tc-section"><div class="tc-num"><div class="tc-num-pill">6</div> Governing Law</div><div class="tc-p">These terms are governed by the laws of the State of California. Disputes shall be subject to the courts of Los Angeles County.</div></div>
+    <div class="tc-disclaimer">These terms are provided for informational purposes. LIMO LAX recommends clients obtain their own travel insurance. Nothing in these terms limits the driver's liability under applicable California law.</div>
+    <div class="tc-footer">
+      <button class="btn-tc-decline" onclick="declineTC()">Decline</button>
+      <button class="btn-tc-accept" onclick="acceptTC()">I Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var bType='',chosenDrv='',chosenVeh='Sedan',curStep=1,tripPrice=320;
+var sp={1:'20%',2:'40%',3:'60%',4:'80%',5:'100%',6:'100%'};
+var pt={airport:{sedan:180,suv:320,sprinter:480},p2p:{sedan:140,suv:250,sprinter:380},hourly:{sedan:85,suv:120,sprinter:160},roundtrip:{sedan:280,suv:520,sprinter:800},corporate:{sedan:200,suv:340,sprinter:500},event:{sedan:240,suv:400,sprinter:600}};
+
+function selType(t){bType=t;document.getElementById('s-landing').style.display='none';if(t==='driver'){document.getElementById('s-driver').style.display='block';}else{startForm('ride');}window.scrollTo({top:0,behavior:'smooth'});}
+function goLand(){bType='';chosenDrv='';document.getElementById('s-landing').style.display='block';document.getElementById('s-driver').style.display='none';document.getElementById('s-form').style.display='none';window.scrollTo({top:document.getElementById('book').offsetTop-60,behavior:'smooth'});}
+function pickDrv(card,name){document.querySelectorAll('.dc').forEach(function(c){c.classList.remove('sel');});card.classList.add('sel');chosenDrv=name;document.getElementById('drv-name').textContent=name;document.getElementById('drv-note').style.display='block';document.getElementById('btn-drv-go').style.display='flex';}
+function startForm(t){document.getElementById('s-driver').style.display='none';document.getElementById('s-form').style.display='block';if(t==='driver'){document.getElementById('f-icon').textContent='\u{1F9D1}\u200D\u2708\uFE0F';document.getElementById('f-lbl').textContent='Book Your Driver';document.getElementById('f-title').textContent='Book Your Preferred Driver';document.getElementById('f-drv-rem').style.display='block';document.getElementById('f-drv-name').textContent=chosenDrv;}else{document.getElementById('f-icon').textContent='\u{1F698}';document.getElementById('f-lbl').textContent='Book a Ride';document.getElementById('f-title').textContent='Request a Reservation';document.getElementById('f-drv-rem').style.display='none';}curStep=1;showStep(1);window.scrollTo({top:document.getElementById('book').offsetTop-60,behavior:'smooth'});}
+function goS(n){if(n>curStep){if(curStep===1){var pu=document.getElementById('pickup').value.trim();var dr=document.getElementById('dropoff').value.trim();var dt=document.getElementById('trip-date').value;var tm=document.getElementById('trip-time').value;if(!pu||!dr||!dt||!tm){hl(['pickup','dropoff','trip-date','trip-time']);return;}}if(curStep===3){var fn=document.getElementById('fname').value.trim();var ln=document.getElementById('lname').value.trim();var em=document.getElementById('email').value.trim();var ph=document.getElementById('phone').value.trim();if(!fn||!ln||!em||!ph){hl(['fname','lname','email','phone']);return;}}}if(n===4)buildSum();if(n===5)popPay();curStep=n;showStep(n);}
+function showStep(n){document.querySelectorAll('.sp').forEach(function(p){p.classList.remove('active');});var pg=document.getElementById('step-'+n);if(pg)pg.classList.add('active');for(var i=1;i<=5;i++){var si=document.getElementById('si-'+i);var sl=document.getElementById('sl-'+i);if(!si)continue;si.className='step-item';if(i<n){si.classList.add('done');if(sl)sl.classList.add('done');}else if(i===n){si.classList.add('active');if(sl)sl.classList.remove('done');}else{if(sl)sl.classList.remove('done');}}var pf=document.getElementById('pfill');if(pf)pf.style.width=sp[n]||'100%';if(n===6){var sr=document.querySelector('.steps-row');var pb=document.querySelector('.prog-bar');if(sr)sr.style.display='none';if(pb)pb.style.display='none';}window.scrollTo({top:document.getElementById('book').offsetTop-60,behavior:'smooth'});}
+function hl(ids){ids.forEach(function(id){var el=document.getElementById(id);if(el&&!el.value){el.style.borderColor='rgba(255,69,58,0.6)';el.style.boxShadow='0 0 0 3px rgba(255,69,58,0.1)';el.addEventListener('input',function(){el.style.borderColor='';el.style.boxShadow='';},{once:true});}});}
+function fmtT(t){var p=t.split(':');var h=parseInt(p[0]);return((h%12)||12)+':'+p[1]+' '+(h>=12?'PM':'AM');}
+function buildSum(){var pu=document.getElementById('pickup').value||'--';var dr=document.getElementById('dropoff').value||'--';var dt=document.getElementById('trip-date').value;var tm=document.getElementById('trip-time').value;var dtStr='--';if(dt){var d=new Date(dt+'T00:00:00');dtStr=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});}if(tm)dtStr+=' at '+fmtT(tm);document.getElementById('sum-route').textContent=pu+' to '+dr;document.getElementById('sum-dt').textContent=dtStr;document.getElementById('sum-pax').textContent='--';document.getElementById('sum-veh').textContent=chosenVeh;document.getElementById('sum-nm').textContent=(document.getElementById('fname').value+' '+document.getElementById('lname').value).trim()||'--';document.getElementById('sum-ct').textContent=document.getElementById('email').value+(document.getElementById('phone').value?' / '+document.getElementById('phone').value:'');if(chosenDrv){document.getElementById('sum-drv').textContent=chosenDrv;document.getElementById('sum-drv-row').style.display='flex';}else{document.getElementById('sum-drv-row').style.display='none';}}
+function popPay(){var pu=document.getElementById('pickup').value||'--';var dr=document.getElementById('dropoff').value||'--';document.getElementById('pay-route').textContent=pu+' to '+dr;document.getElementById('pay-veh').textContent=chosenVeh;document.getElementById('pay-total').textContent='$'+tripPrice.toFixed(2);document.getElementById('pay-btn-txt').textContent='Confirm & Pay $'+tripPrice.toFixed(2);document.getElementById('card-name').value=(document.getElementById('fname').value+' '+document.getElementById('lname').value).trim();}
+function calcP(){var s=document.getElementById('nb-stype').value;if(s&&pt[s]){tripPrice=pt[s]['suv'];}}
+function procPay(){var cn=document.getElementById('card-name').value.trim();var num=document.getElementById('card-num').value.replace(/\s/g,'');var exp=document.getElementById('card-exp').value.trim();var cvv=document.getElementById('card-cvv').value.trim();if(!cn||num.length<15||!exp||cvv.length<3){hl(['card-name','card-num','card-exp','card-cvv']);return;}var tc=document.getElementById('tc-check');if(!tc||!tc.checked){document.getElementById('tc-err').style.display='block';document.getElementById('tc-box').scrollIntoView({behavior:'smooth',block:'center'});return;}var btn=document.getElementById('pay-btn');btn.disabled=true;btn.style.opacity='0.5';document.getElementById('pay-btn-txt').textContent='Processing...';setTimeout(function(){doConfirm();},1800);}
+function doConfirm(){var ref=Math.floor(1000+Math.random()*8999);var pu=document.getElementById('pickup').value||'--';var dr=document.getElementById('dropoff').value||'--';var dt=document.getElementById('trip-date').value;var tm=document.getElementById('trip-time').value;var dtStr='--';if(dt){var d=new Date(dt+'T00:00:00');dtStr=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}if(tm)dtStr+=' at '+fmtT(tm);document.getElementById('ref-num').textContent=ref;document.getElementById('conf-route').textContent=pu+' to '+dr;document.getElementById('conf-dt').textContent=dtStr;document.getElementById('conf-veh').textContent=chosenVeh;document.getElementById('conf-email').textContent=document.getElementById('email').value||'--';if(chosenDrv){document.getElementById('conf-drv').textContent=chosenDrv;document.getElementById('conf-drv-row').style.display='flex';}goS(6);}
+function selV(el,name){document.querySelectorAll('.veh').forEach(function(v){v.classList.remove('sel');});el.classList.add('sel');chosenVeh=name;}
+function selPay(el){document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});el.classList.add('sel');}
+function togStop(btn){var r=document.getElementById('stop-row');var v=r.classList.toggle('vis');btn.childNodes[0].textContent=v?'-':'+';btn.childNodes[1].textContent=v?' Remove stop':' Add intermediate stop';}
+function togFlight(btn){var f=document.getElementById('flight-f');f.style.display=f.style.display==='none'?'block':'none';}
+function fmtCard(i){var v=i.value.replace(/\D/g,'').substring(0,16);var p=[];for(var x=0;x<v.length;x+=4)p.push(v.substring(x,x+4));i.value=p.join(' ');}
+function fmtExp(i){var v=i.value.replace(/\D/g,'').substring(0,4);if(v.length>=2)v=v.substring(0,2)+' / '+v.substring(2);i.value=v;}
+function togTC(cb){var box=document.getElementById('tc-vis');var err=document.getElementById('tc-err');if(cb.checked){box.style.background='#2997ff';box.style.borderColor='#2997ff';box.textContent='✓';if(err)err.style.display='none';}else{box.style.background='transparent';box.style.borderColor='rgba(255,255,255,0.2)';box.textContent='';}}
+function openTC(e){if(e)e.preventDefault();document.getElementById('tc-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeTC(e){if(e&&e.target!==document.getElementById('tc-overlay'))return;document.getElementById('tc-overlay').classList.remove('open');document.body.style.overflow='';}
+function acceptTC(){document.getElementById('tc-check').checked=true;togTC(document.getElementById('tc-check'));document.getElementById('tc-overlay').classList.remove('open');document.body.style.overflow='';}
+function declineTC(){document.getElementById('tc-check').checked=false;togTC(document.getElementById('tc-check'));document.getElementById('tc-overlay').classList.remove('open');document.body.style.overflow='';}
+var today=new Date().toISOString().split('T')[0];
+document.getElementById('trip-date').min=today;
+document.getElementById('trip-date').value=today;
+</script>
+</body>
+</html>
